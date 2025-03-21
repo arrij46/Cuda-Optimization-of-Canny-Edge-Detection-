@@ -1,0 +1,93 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 73.33      0.11     0.11        1   110.00   110.00  derrivative_x_y
+ 13.33      0.13     0.02        1    20.00    20.00  non_max_supp
+  6.67      0.14     0.01        1    10.00    10.00  apply_hysteresis
+  6.67      0.15     0.01        1    10.00    10.00  magnitude_x_y
+  0.00      0.15     0.00        1     0.00     0.00  __device_stub__Z13GaussianBlurYiPfS_iiPs(int, float*, float*, int, int, short*)
+  0.00      0.15     0.00        1     0.00     0.00  __device_stub__Z13GaussianBlurXiPhPfS0_ii(int, unsigned char*, float*, float*, int, int)
+  0.00      0.15     0.00        1     0.00     0.00  __device_stub__Z19GaussianBlurYSharediPfS_iiPs(int, float*, float*, int, int, short*)
+  0.00      0.15     0.00        1     0.00     0.00  __device_stub__Z19GaussianBlurXSharediPhPfS0_ii(int, unsigned char*, float*, float*, int, int)
+  0.00      0.15     0.00        1     0.00   150.00  canny
+  0.00      0.15     0.00        1     0.00     0.00  gaussian_smooth
+  0.00      0.15     0.00        1     0.00     0.00  launchKernel
+  0.00      0.15     0.00        1     0.00     0.00  make_gaussian_kernel
+  0.00      0.15     0.00        1     0.00     0.00  read_pgm_image
+  0.00      0.15     0.00        1     0.00     0.00  write_pgm_image
+
+			Call graph
+
+
+granularity: each sample hit covers 4 byte(s) for 6.67% of 0.15 seconds
+
+index % time    self  children    called     name
+                0.00    0.15       1/1           main [2]
+[1]    100.0    0.00    0.15       1         canny [1]
+                0.11    0.00       1/1           derrivative_x_y [3]
+                0.02    0.00       1/1           non_max_supp [4]
+                0.01    0.00       1/1           magnitude_x_y [6]
+                0.01    0.00       1/1           apply_hysteresis [5]
+                0.00    0.00       1/1           gaussian_smooth [7]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]    100.0    0.00    0.15                 main [2]
+                0.00    0.15       1/1           canny [1]
+                0.00    0.00       1/1           read_pgm_image [10]
+                0.00    0.00       1/1           write_pgm_image [11]
+-----------------------------------------------
+                0.11    0.00       1/1           canny [1]
+[3]     73.3    0.11    0.00       1         derrivative_x_y [3]
+-----------------------------------------------
+                0.02    0.00       1/1           canny [1]
+[4]     13.3    0.02    0.00       1         non_max_supp [4]
+-----------------------------------------------
+                0.01    0.00       1/1           canny [1]
+[5]      6.7    0.01    0.00       1         apply_hysteresis [5]
+-----------------------------------------------
+                0.01    0.00       1/1           canny [1]
+[6]      6.7    0.01    0.00       1         magnitude_x_y [6]
+-----------------------------------------------
+                0.00    0.00       1/1           canny [1]
+[7]      0.0    0.00    0.00       1         gaussian_smooth [7]
+                0.00    0.00       1/1           make_gaussian_kernel [9]
+                0.00    0.00       1/1           launchKernel [8]
+-----------------------------------------------
+                0.00    0.00       1/1           gaussian_smooth [7]
+[8]      0.0    0.00    0.00       1         launchKernel [8]
+                0.00    0.00       1/1           __device_stub__Z13GaussianBlurXiPhPfS0_ii(int, unsigned char*, float*, float*, int, int) [397]
+                0.00    0.00       1/1           __device_stub__Z13GaussianBlurYiPfS_iiPs(int, float*, float*, int, int, short*) [396]
+                0.00    0.00       1/1           __device_stub__Z19GaussianBlurXSharediPhPfS0_ii(int, unsigned char*, float*, float*, int, int) [399]
+                0.00    0.00       1/1           __device_stub__Z19GaussianBlurYSharediPfS_iiPs(int, float*, float*, int, int, short*) [398]
+-----------------------------------------------
+                0.00    0.00       1/1           gaussian_smooth [7]
+[9]      0.0    0.00    0.00       1         make_gaussian_kernel [9]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[10]     0.0    0.00    0.00       1         read_pgm_image [10]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[11]     0.0    0.00    0.00       1         write_pgm_image [11]
+-----------------------------------------------
+                0.00    0.00       1/1           launchKernel [8]
+[396]    0.0    0.00    0.00       1         __device_stub__Z13GaussianBlurYiPfS_iiPs(int, float*, float*, int, int, short*) [396]
+-----------------------------------------------
+                0.00    0.00       1/1           launchKernel [8]
+[397]    0.0    0.00    0.00       1         __device_stub__Z13GaussianBlurXiPhPfS0_ii(int, unsigned char*, float*, float*, int, int) [397]
+-----------------------------------------------
+                0.00    0.00       1/1           launchKernel [8]
+[398]    0.0    0.00    0.00       1         __device_stub__Z19GaussianBlurYSharediPfS_iiPs(int, float*, float*, int, int, short*) [398]
+-----------------------------------------------
+                0.00    0.00       1/1           launchKernel [8]
+[399]    0.0    0.00    0.00       1         __device_stub__Z19GaussianBlurXSharediPhPfS0_ii(int, unsigned char*, float*, float*, int, int) [399]
+-----------------------------------------------
+
+Index by function name
+
+ [396] __device_stub__Z13GaussianBlurYiPfS_iiPs(int, float*, float*, int, int, short*) [1] canny [9] make_gaussian_kernel
+ [397] __device_stub__Z13GaussianBlurXiPhPfS0_ii(int, unsigned char*, float*, float*, int, int) [3] derrivative_x_y [4] non_max_supp
+ [398] __device_stub__Z19GaussianBlurYSharediPfS_iiPs(int, float*, float*, int, int, short*) [7] gaussian_smooth [10] read_pgm_image
+ [399] __device_stub__Z19GaussianBlurXSharediPhPfS0_ii(int, unsigned char*, float*, float*, int, int) [8] launchKernel [11] write_pgm_image
+   [5] apply_hysteresis        [6] magnitude_x_y

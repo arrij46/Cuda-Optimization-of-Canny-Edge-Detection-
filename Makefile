@@ -1,43 +1,37 @@
-# My changes
-NVCC=nvcc 
-# CUDA Flags
-CUDA_FLAGS= -arch=sm_52  # Adjust this based on your GPU architecture
-CUDA_LIBS= -lcudart
-
-#
-
 CC=gcc
+NVCC=nvcc # cuda compiler
 LIBS= 
 SOURCE_DIR= .
 BIN_DIR= .
 CFLAGS= -O1 -g
 LDFLAGS= -lm 
-OBJS=$(SOURCE_DIR)/canny_edge.o $(SOURCE_DIR)/hysteresis.o $(SOURCE_DIR)/pgm_io.o $(SOURCE_DIR)/cuda_processing.o
+#compile the cuda program too
+OBJS=$(SOURCE_DIR)/canny_edge.o $(SOURCE_DIR)/hysteresis.o $(SOURCE_DIR)/pgm_io.o $(SOURCE_DIR)/CudaCode.o
 EXEC= canny
 INCS= -I.
 CSRCS= $(SOURCE_DIR)/canny_edge \
 	$(SOURCE_DIR)/hysteresis.c \
 	$(SOURCE_DIR)/pgm_io.c
 
-# CUDA Source files
-CU_SRCS=$(SOURCE_DIR)/cuda_processing.cu
+# cuda source file
+CUDA_SRC= $(SOURCE_DIR)/CudaCode.cu
 
-# PIC=pics/pic_small.pgm
-# PIC=pics/pic_medium.pgm
+
 PIC=pics/pic_large.pgm
 
 all: canny
-# Link everything
-canny: $(OBJS)
-	$(CC) $(CFLAGS)  -o $@ $? $(LDFLAGS)  $(CUDA_LIBS)
 
-%.o: %.c 
+# links all the final obj files using nvcc 
+canny: $(OBJS)
+	$(NVCC) $(CFLAGS)  -o $@ $? $(LDFLAGS)
+
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Compile CUDA files
+# compile the cuda program into an object file
 %.o: %.cu
-	$(NVCC) $(CUDA_FLAGS) -c $< -o $@
-	
+	$(NVCC) $(CFLAGS) -c $< -o $@
+
 run: $(EXEC) $(PIC)
 	./$(EXEC) $(PIC) 2.5   0.25  0.5
 # 			        sigma tlow  thigh
