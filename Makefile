@@ -7,6 +7,8 @@ CFLAGS= -O1 -g
 LDFLAGS= -lm 
 #compile the cuda program too
 OBJS=$(SOURCE_DIR)/canny_edge.o $(SOURCE_DIR)/hysteresis.o $(SOURCE_DIR)/pgm_io.o $(SOURCE_DIR)/CudaCode.o
+#OBJS=$(SOURCE_DIR)/canny_edge.o $(SOURCE_DIR)/hysteresis.o $(SOURCE_DIR)/pgm_io.o $(SOURCE_DIR)/CudaCode2.o
+
 EXEC= canny
 INCS= -I.
 CSRCS= $(SOURCE_DIR)/canny_edge \
@@ -15,9 +17,9 @@ CSRCS= $(SOURCE_DIR)/canny_edge \
 
 # cuda source file
 CUDA_SRC= $(SOURCE_DIR)/CudaCode.cu
+#CUDA_SRC= $(SOURCE_DIR)/CudaCode2.cu
 
-
-PIC=pics/pic_large.pgm
+PIC=pics/pic_small.pgm
 
 all: canny
 

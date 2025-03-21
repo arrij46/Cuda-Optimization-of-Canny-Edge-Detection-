@@ -54,9 +54,10 @@
  *******************************************************************************/
 // Declare CUDA function
 extern void launchKernel(int center, unsigned char *image, float *kernel, float *tempim, int rows, int cols, short int **smoothedim, int *windowsize);
-extern void launchKernel2(short int *smoothedim, int rows, int cols, short int *delta_x, short int *delta_y);
+extern void launchKernel2(short int *smoothedim, int rows, int cols, short int **delta_x, short int **delta_y);
 
 typedef long long fixed;
+#include <time.h>
 #define fixeddot 16
 
 #define VERBOSE 0
@@ -88,6 +89,10 @@ double angle_radians(double x, double y);
 
 int main(int argc, char *argv[])
 {
+   clock_t start, end;
+   double cpu_time_used;
+
+   start = clock();          // Start time
    char *infilename = NULL;  /* Name of the input image */
    char *dirfilename = NULL; /* Name of the output gradient direction image */
    char outfilename[128];    /* Name of the output "edge" image */
@@ -174,6 +179,11 @@ int main(int argc, char *argv[])
       fprintf(stderr, "Error writing the edge image, %s.\n", outfilename);
       exit(1);
    }
+   end = clock(); // End time
+
+   cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC; // Convert to seconds
+   printf("\n\nApplication Time taken: %f s\n", cpu_time_used);
+
    return 0;
 }
 
@@ -423,7 +433,7 @@ void derivative_x_y(short int *smoothedim, int rows, int cols,
       fprintf(stderr, "Error allocating the delta_x image.\n");
       exit(1);
    }
-   launchKernel2(smoothedim, rows, cols, *delta_x, *delta_y);
+   launchKernel2(smoothedim, rows, cols, delta_x, delta_y);
    /*
 
    for(r=0;r<rows;r++){
@@ -487,7 +497,7 @@ void gaussian_smooth(unsigned char *image, int rows, int cols, float sigma,
       exit(1);
    }
 
-   //extern void launchKernel(int center, unsigned char *image, float *kernel, float *tempim, int rows, int cols, short int *smoothedim, int *windowsize);
+   // extern void launchKernel(int center, unsigned char *image, float *kernel, float *tempim, int rows, int cols, short int *smoothedim, int *windowsize);
 
    launchKernel(center, image, kernel, tempim, rows, cols, smoothedim, &windowsize);
 
